@@ -4,4 +4,4 @@ source "https://rubygems.org"
 gemspec
 
 gem "appraisal"
-gem "rake", "~> 12.0"
+gem "rake", "~> 13.0"
