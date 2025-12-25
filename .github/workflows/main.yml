@@ -24,3 +24,24 @@ jobs:
     - name: Run the default task
       run: |
         bundle exec rake
+  appraisal:
+    name: Appraisal
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: [3.0, 3.1, 3.2, 3.3, 3.4]
+        appraisal: [rails_7_1, rails_7_2, rails_8_0, rails_8_1]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+    - name: Install dependencies with appraisal
+      run: |
+        bundle exec appraisal install
+    - name: Run appraisal
+      run: |
+        bundle exec appraisal ${{ matrix.appraisal }} rake
